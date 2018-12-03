@@ -13,7 +13,7 @@ class QiuShiBaiKe:
         return [self.start_url.format(i) for i in range(1, 14)]
 
     def parse_url(self, url):
-        print(url)
+        # print(url)
         response = requests.get(url, headers=self.headers)
         return response.content.decode()
 
