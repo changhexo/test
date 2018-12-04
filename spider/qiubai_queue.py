@@ -72,7 +72,7 @@ class QiuShiBaiKe:
         t_save = threading.Thread(target=self.save_content_list)
         thread_list.append(t_save)
         for t in thread_list:
-            t.setDaemon(True)  # 把子线程设置为守护线程，该线程不重要，主线程结束，了线程结束
+            t.setDaemon(True)  # 把子线程设置为守护线程，该线程不重要，主线程结束，子线程结束
             t.start()
 
         for q in [self.url_queue, self.html_queue, self.content_queue]:
