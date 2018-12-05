@@ -51,7 +51,7 @@ def get_content():
     return room
 
 
-for i in range(num-1):
+for i in range(1, num):
     ret = get_content()
     with open('douyu.txt', 'a', encoding='utf-8') as f:
         for val in ret:
