@@ -130,19 +130,23 @@ windows下安装会报以下错误：
   - 给item额外添加key:vaalue
   - 在pipeline去做if判断，也可以用spider.name去做判断
 
-### logging模块
-使用logging.warning()去打印输出
+### logging模块使用
 
-  - 生成时间
-  - 显示来自哪个爬虫
+- scrapy中使用logging
+
+    使用logging.warning()去打印输出
+
+   - 生成时间
+   - 显示来自哪个爬虫
   
-		import logging
-		logger = logging.getLogger(__name__)
-		logger.warning(item)
+			import logging
+			logger = logging.getLogger(__name__)
+			logger.warning(item)
   - 日志保存到本地,编辑settings.py
   
-  		LOG_FILE = "./spider.log"
-  - 普通py文件定义日志存储
+			LOG_LEVEL = "WARNING"
+	  		LOG_FILE = "./spider.log"
+- 普通py文件中定义日志存储
   
 		import logging
 
@@ -163,5 +167,112 @@ windows下安装会报以下错误：
 
 		运行结果：
 		2018-12-07 15:13:43 [try_log.py line:11] INFO: this is info log
-  
 
+# 构造url地址、请求
+	
+- 新建项目
+
+		scrapy startproject tencent
+- 创建爬虫
+
+		cd tencent/
+		scrapy genspider hr "tencent.com"
+- 查看目录树
+
+		[root@localhost tencent]# tree
+		.
+		├── scrapy.cfg
+		└── tencent
+		    ├── __init__.py
+		    ├── items.py
+		    ├── middlewares.py
+		    ├── pipelines.py
+		    ├── __pycache__
+		    │   ├── __init__.cpython-36.pyc
+		    │   └── settings.cpython-36.pyc
+		    ├── settings.py
+		    └── spiders
+		        ├── hr.py
+		        ├── __init__.py
+		        └── __pycache__
+		            └── __init__.cpython-36.pyc
+- 编辑 hr.py
+
+		# -*- coding: utf-8 -*-
+		import scrapy
+		import time
+		
+		
+		class HrSpider(scrapy.Spider):
+		    name = 'hr'
+		    allowed_domains = ['tencent.com']
+		    # start_urls = ['http://tencent.com/']
+		    start_urls = ['http://hr.tencent.com/position.php']
+		
+		    def parse(self, response):
+		        tr_list = response.xpath("//table[@class='tablelist']/tr")[1:-1]
+		        for tr in tr_list:
+		            item = {}
+		            item['title'] = tr.xpath("./td[1]/a/text()").extract_first()
+		            item['position'] = tr.xpath("./td[2]/text()").extract_first()
+		            item['publish_date'] = tr.xpath("./td[5]/text()").extract_first()
+		            yield item
+		        time.sleep(3) # 没有做反爬，设置休眠
+		        # 寻找下一页的url地址
+		        next_url = response.xpath("//a[@id='next']/@href").extract_first()
+		        if next_url != "javascript:;":
+		            next_url = "http://hr.tencent.com/" + next_url
+					# 通过 yield 将 request 请求发送给 scrapy 引擎
+		            yield scrapy.Request(
+		                next_url,
+		                callback=self.parse  # 下一页处理方式，和当前页处理方式一致，可以调用自身，否则需要另外定义一个方法
+		            )
+	
+- 编辑 pipelines.py
+
+		from pymongo import MongoClient
+		
+		
+		# 实例化
+		client = MongoClient()
+		collection = client["tencent"]["hr"]
+		
+		
+		class TencentPipeline(object):
+		    def process_item(self, item, spider):
+		        print(item)  # 给终端回显，看一下输出
+				# 将数据存入 mongodb
+		        collection.insert(item)
+		        return item
+
+- 修改 settins.py
+
+		# 定义日志级别
+		LOG_LEVEL = "WARNING"
+		# 设置 User-Agent
+		USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.80 Safari/537.36"
+		# 开启 pipeline
+		ITEM_PIPELINES = {
+		   'tencent.pipelines.TencentPipeline': 300,
+		}
+
+- 启动爬虫
+
+		scrapy crawl hr
+
+### scrapy.Request()参数：
+- url  # 必选参数
+- callback  # 可选参数
+- method='GET'  # 可选参数，默认 GET
+- headers  # 可选参数
+- body  # 可选参数，当 method='POST'时，就需要传body
+- cookies  # 可选参数，给出cookies参数，所以cookies不能放在headers里，需要单独给才会生效
+- meta  # 可选参数
+- dont_filter=False  # 可选参数，默认False：过滤
+
+- **常用参数**：
+	- callback  # 指定传入的url交给哪个解析函数去处理
+	- meta  # 实现不同的解析函数中传递参数，meta默认会携带部分信息，比如下载延迟，请求深度等
+	- dont_filter  # 让scrapy的去重不会去过滤当前url, scrapy默认有url去重的功能，对需要重复请求的url有重要用途，比如：百度贴吧，百度风云榜
+
+# item定义(深入)
