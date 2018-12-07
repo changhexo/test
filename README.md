@@ -1,3 +1,3 @@
-[MongoDB](./MongoDB "MongoDb")
+[MongoDB](./MongoDB.md "MongoDb")
 
-[Scrapy](./Scrapy "Scrapy")
+[Scrapy](./Scrapy.md "Scrapy")
