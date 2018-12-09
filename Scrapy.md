@@ -290,3 +290,55 @@ windows下安装会报以下错误：
 
 - open_spider  # 爬虫开始的时候执行，仅执行一次
 - close_spider  # 爬虫关闭的时候执行，仅执行一次
+
+# CrawlSpider类
+- 寻找下一页地址
+
+		scrapy startproject circ
+		cd circ
+		scrapy genspider -t crawl cf circ.gov.cn
+		# 目录树
+		tree
+		.
+		├── circ
+		│   ├── __init__.py
+		│   ├── items.py
+		│   ├── middlewares.py
+		│   ├── pipelines.py
+		│   ├── __pycache__
+		│   │   ├── __init__.cpython-36.pyc
+		│   │   └── settings.cpython-36.pyc
+		│   ├── settings.py
+		│   └── spiders
+		│       ├── cf.py
+		│       ├── __init__.py
+		│       └── __pycache__
+		│           └── __init__.cpython-36.pyc
+		└── scrapy.cfg
+
+		# vim cf.py # 跟之前生成的spider有所不同，多了rules,prase函数没了
+		# -*- coding: utf-8 -*-
+		import scrapy
+		from scrapy.linkextractors import LinkExtractor
+		from scrapy.spiders import CrawlSpider, Rule
+		
+		
+		class CfSpider(CrawlSpider):
+		    name = 'cf'
+		    allowed_domains = ['circ.gov.cn']
+		    start_urls = ['http://circ.gov.cn/']
+		
+		    rules = (
+				# LinkExractor:连接提取器，提取url地址
+				# callback:提取出来的地址的response会交给callback处理
+				# follow:当前url地址的响应是够重新经过rules来提取url地址
+		        Rule(LinkExtractor(allow=r'Items/'), callback='parse_item', follow=True),
+		    )
+		
+			# prase函数 有特殊功能，不能定义
+		    def parse_item(self, response):
+		        i = {}
+		        #i['domain_id'] = response.xpath('//input[@id="sid"]/@value').extract()
+		        #i['name'] = response.xpath('//div[@id="name"]').extract()
+		        #i['description'] = response.xpath('//div[@id="description"]').extract()
+		        return i
