@@ -276,3 +276,17 @@ windows下安装会报以下错误：
 	- dont_filter  # 让scrapy的去重不会去过滤当前url, scrapy默认有url去重的功能，对需要重复请求的url有重要用途，比如：百度贴吧，百度风云榜
 
 # item定义(深入)
+
+# debug
+
+# scrapy shell
+
+# scrapy settings
+- 公共变量（数据库地址、用户、密码）
+- 方便自己、别人修改
+- 一般全大写字母命名变量名
+
+# pipeline使用
+
+- open_spider  # 爬虫开始的时候执行，仅执行一次
+- close_spider  # 爬虫关闭的时候执行，仅执行一次
