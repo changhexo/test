@@ -1,0 +1,11 @@
+﻿ssr安卓
+https://github.com/shadowsocksrr/shadowsocksr-android/releases
+
+ssr-win
+https://github.com/shadowsocksrr/shadowsocksr-csharp/releases
+
+ssr-server
+https://github.com/shadowsocksrr/shadowsocksr
+
+
+https://github.com/Alvin9999/new-pac/wiki
