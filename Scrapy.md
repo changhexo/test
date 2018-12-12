@@ -292,7 +292,7 @@ windows下安装会报以下错误：
 - close_spider  # 爬虫关闭的时候执行，仅执行一次
 
 # CrawlSpider类
-- 寻找下一页地址
+- 指定的start_url的响应会经过rules提取url地址
 
 		scrapy startproject circ
 		cd circ
@@ -331,7 +331,7 @@ windows下安装会报以下错误：
 		    rules = (
 				# LinkExractor:连接提取器，提取url地址
 				# callback:提取出来的地址的response会交给callback处理
-				# follow:当前url地址的响应是够重新经过rules来提取url地址
+				# follow:当前url地址的响应是够重新经过rules来提取url地址，提取的链接是否需要跟进
 		        Rule(LinkExtractor(allow=r'Items/'), callback='parse_item', follow=True),
 		    )
 		
@@ -342,3 +342,38 @@ windows下安装会报以下错误：
 		        #i['name'] = response.xpath('//div[@id="name"]').extract()
 		        #i['description'] = response.xpath('//div[@id="description"]').extract()
 		        return i
+- 注意点:
+	- url地址不完整，spider会补全
+	- prase函数 有特殊功能，不能定义
+- LinkExtractor常见参数：
+	- allow: 满足括号中"正则表达式"的url会被提取，如果为空，匹配全部
+	- deny: 满足括号中"正则表达式"的url一定不提取，优先级高于allow
+	- allow_domains: 会被提取的链接的domains
+	- deny_domains: 一定不会被提取链接的domains
+	- restrict_xpaths: 使用xpath表达式，和allow共同作用过滤链接，xpath满足范围内的url会被提取
+- spider.Rule常见参数：
+	- link_extract: 是一个Link Extractor对象，用于定义需要提取的链接
+	- callback: 从link_extractor中每获取到链接时，指定的值会作为回调函数
+	- follow: 是一个布尔(boolean)值，指定了根据该规则从response提取的链接是否需要跟进
+		- 如果callback为None，follow默认设置为True,否则默认为False
+	- process_links: 指定该spider中哪个函数将会调用，从link_extract中获取到链接列表时将会调用该函数，**该方法主要用来过滤url**
+	- process_request: 指定该spider中哪个的函数会被调用，该规则提取到的每个request都会调用该函数，**用来过滤request**
+
+### scrapy模拟登陆:
+获取cookies
+
+- request模拟登陆
+- selenium模拟登陆
+- scrapy模拟登陆
+- scrapy.FormResquest发送表单请求
+
+		...
+		yield scrapy.FromRequest(
+			"https://github.com/session",
+			formdate=post_data,
+			callback=self.after_login
+		)
+		...
+### 下载中间件
+
+### scrapy 发送post请求
