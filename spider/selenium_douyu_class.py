@@ -17,8 +17,8 @@ class DouYuSpider(object):
         # self.num = int(pages[-3].text)
         # print(num)
 
-    def __del__(self):
-        self.driver.quit()
+    # def __del__(self):
+    #     self.driver.quit()
 
     def get_content_list(self):
         room_list_selenium = self.driver.find_elements_by_xpath("//ul[@id='live-list-contentbox']/li")

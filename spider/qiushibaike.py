@@ -15,7 +15,8 @@ class QiuShiBaiKe:
     def parse_url(self, url):
         # print(url)
         response = requests.get(url, headers=self.headers)
-        return response.content.decode()
+        # return response.content.decode("utf-8")
+        return response.content
 
     def get_content_list(self, html_str):
         html = etree.HTML(html_str)

@@ -33,3 +33,7 @@
 	- python开发虚拟环境管理:
 		- Windows:Anaconda
 		- Linux:virtualenv,virtualenvwrapper
+
+github仓库:
+rmax/scrapy-redis
+SpringMagnolia/jianlispider
