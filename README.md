@@ -21,3 +21,5 @@
 
 [SSR脚本](./sh/ssr.sh "ssr.sh")
 
+[其它](./MD/other.md "other")
+

@@ -7,6 +7,8 @@
 		https://tool.lu/
 		# 免费代理-米扑代理(网站不能复制粘贴，可以爬取，端口可以用简单图片识别:tesseract(pytesseract模块))
 		https://proxy.mimvp.com/freesecret.php
+		# IP地址是否可用查询:
+		https://ipcheck.need.sh/
 - Google浏览器插件：
 	- JSONViwe
 	- XPath Helper
@@ -23,6 +25,13 @@
 	- Localization
 	- Emmet
 	- ConvertToUTF8
+
+- [Atom插件：](https://blog.csdn.net/u013474104/article/details/79373975 "Atom插件")
+	- emmet: Web 快速开发，HTML/CSS 速写神器
+	- pretty-json: Atom包自动格式化JSON文件
+	- atom-html-preview: HTML预览，Atom编辑器的实时预览工具
+	- markdown-preview: 使用显示当前编辑器右侧的呈现的HTML标记ctrl-shift-m 
+	- line-ending-selector: 在Unix和Window风格的行尾之间切换
 
 - 工具选择:
 	- 思维导图:MindManager
@@ -133,3 +142,10 @@
 		
 		</body>
 		</html>
+
+- 修改字符集:
+
+		localedef -c -f UTF-8 -i zh_CN zh_CN.UTF-8
+		export LC_ALL=zh_CN.UTF-8
+		echo 'LANG="zh_CN.UTF-8"' > /etc/locale.conf
+
