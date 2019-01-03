@@ -19,3 +19,5 @@
 
 [服务器初始化脚本](./sh/linux.sh "linux.sh")
 
+[SSR脚本](./sh/ssr.sh "ssr.sh")
+
