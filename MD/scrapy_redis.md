@@ -4,6 +4,6 @@
 - 爬虫持久化
 - 分布式
 
-![](./images/scrapy_2.png)
+![](../images/scrapy_2.png)
 ----
-![](./images/scrapy_4.png)
+![](../images/scrapy_4.png)
