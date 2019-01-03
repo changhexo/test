@@ -9,6 +9,7 @@
 		https://proxy.mimvp.com/freesecret.php
 		# IP地址是否可用查询:
 		https://ipcheck.need.sh/
+		http://ping.pe
 - Google浏览器插件：
 	- JSONViwe
 	- XPath Helper
