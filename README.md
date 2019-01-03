@@ -1,4 +1,4 @@
-# 目录
+### 目录
 [MongoDB 笔记](./MD/MongoDB.md "MongoDb")
 
 [Scrapy 笔记](./MD/Scrapy.md "Scrapy")
@@ -10,4 +10,12 @@
 [Redis 笔记](./MD/Redis.md "Redis")
 
 [virtualenv 笔记](./MD/virtualenv.md "virtualenv")
+
+[git 笔记](./MD/git.md "git")
+
+[docker 笔记](./MD/docker.md "docker")
+
+[docker-ce 笔记](./MD/docker-ce.md "docker-ce")
+
+[服务器初始化脚本](./sh/linux.sh "linux.sh")
 
