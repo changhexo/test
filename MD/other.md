@@ -150,3 +150,19 @@
 		export LC_ALL=zh_CN.UTF-8
 		echo 'LANG="zh_CN.UTF-8"' > /etc/locale.conf
 
+- Python2设置默认字符集：
+	
+		import sys
+		reload(sys)
+		sys.setdefaultencoding('utf8')
+
+- 安装Python-3.6.1:
+
+		yum -y install wget sqlite-devel xz gcc automake zlib-devel openssl-devel epel-release git
+		wget https://www.python.org/ftp/python/3.6.1/Python-3.6.1.tar.xz
+		tar xvf Python-3.6.1.tar.xz  && cd Python-3.6.1
+		./configure && make && make install
+
+- 升级pip：
+
+		pip3 install --upgrade pip
